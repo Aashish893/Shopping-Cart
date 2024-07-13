@@ -17,10 +17,8 @@ phases:
       - npm run build
   post_build:
     commands:
-      - aws s3 rm s3://my-react-frontend-bucket --recursive
-      - echo S3 bucket is cleared
-      - aws s3 cp build s3://my-react-frontend-bucket/ --recursive
-      - echo Frontend build complete.
+    - echo Frontend build complete.
+    - echo newww
 artifacts:
   files:
     - "**/*"
