@@ -6,7 +6,7 @@ phases:
       python: 3.x
     commands:
       - echo Installing backend dependencies...
-      -cd BackEnd
+      - cd BackEnd
       - pip install -r requirements.txt
   pre_build:
     commands:
