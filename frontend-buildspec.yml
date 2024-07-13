@@ -3,10 +3,10 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 14
+      nodejs: 20.15.1
     commands:
       - echo Installing frontend dependencies...
-      - cd frontend
+      - cd reactfrontend
       - npm install || echo "No package.json file found"
   pre_build:
     commands:
@@ -14,10 +14,15 @@ phases:
   build:
     commands:
       - echo Building frontend...
+      - npm run build
   post_build:
     commands:
       - echo Frontend build complete.
+      - echo Emptying S3 bucket...
+      - aws s3 rm s3://my-react-frontend-bucket --recursive
+      - echo Uploading build artifacts to S3 bucket...
+      - aws s3 cp build s3://my-react-frontend-bucket --recursive
 artifacts:
   files:
     - "**/*"
-  base-directory: reactfrontend
+  base-directory: reactfrontend/build
