@@ -6,19 +6,19 @@ phases:
       python: 3.x
     commands:
       - echo Installing backend dependencies...
-      - cd Backend
+      - cd BackEnd
       - pip install -r requirements.txt
   pre_build:
     commands:
       - echo Running migrations...
-      - cd backend
+      - cd BackEnd
       - python manage.py migrate
   build:
     commands:
       - echo Collecting static files...
-      - cd backend
+      - cd BackEnd
       - python manage.py collectstatic --noinput
 artifacts:
   files:
-    - "backend/**/*"
-  base-directory: Backend
+    - "BackEnd/**/*"
+  base-directory: BackEnd
