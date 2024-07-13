@@ -30,13 +30,34 @@ function ProductsList() {
                         <div className="w-full h-64 mb-4">
                             <img src={product.image} alt={product.title} className="w-full h-full object-contain rounded"/>
                         </div>
-                        <h3 className="text-xl font-semibold"> {product.title} </h3> 
-                        <p className="text-xs text-gray-700 mb-2"> {product.description} </p>
+                        <h3 className="text-l font-semibold"> {product.title} </h3> 
+                        <ShowDescription description={product.description}/>
+                        {/* <p className="text-xs text-gray-700 mb-2"> {product.description} </p> */}
                         <p className="text-lg font-bold mb-2">{product.price}</p>
-                        
+                        <button 
+                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" 
+                            onClick={() => console.log("CLICKED")}
+                        >+</button>
                     </li>
                 ))}
             </ul>
+        </>
+    )
+}
+
+function ShowDescription ({description}) {
+    const [isExpanded, setIsExpanded] = useState(false);
+    const toggleReadMore = () => {
+        setIsExpanded(!isExpanded);
+    }
+
+    return(
+        <>
+            <p className="text-gray-700 mb-4"> {isExpanded ? description : `${description.substring(0, 50)}...`}
+            <button className="text-xs text-blue-500 hover:underline" onClick={toggleReadMore}>
+                {isExpanded ? 'Read Less' : 'Read More'}
+            </button>
+            </p>
         </>
     )
 }
