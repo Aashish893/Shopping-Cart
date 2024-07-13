@@ -20,4 +20,4 @@ phases:
 artifacts:
   files:
     - "**/*"
-  base-directory: Reactfrontend
+  base-directory: reactfrontend
