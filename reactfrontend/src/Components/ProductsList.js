@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import Cart from "./Cart";
 function ProductsList() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const [showCart, setShowCart] = useState(false);
     useEffect(() => {
         const fetcProducts = async() =>{
             try {
@@ -18,12 +18,33 @@ function ProductsList() {
         }
         fetcProducts();
     },[])
+
+    const openCart = async () => {
+        setShowCart(true);
+    }
+
+    const addToCart = async (productId) => {
+        try {
+            await axios.post('http://127.0.0.1:8000/api/cart/add/', { productId });
+            console.log('reached addToCart', productId);
+        } catch (error) {
+            console.log(error);
+        }
+    };
     
     if(loading) return <p>Loading</p>
 
     return(
         <>
-            <h2 className="text-2xl font-bold mb-4">ProductsList</h2>
+            <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-bold">Products List</h2>
+                <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                    onClick={openCart}
+                >
+                    Open Cart
+                </button>
+            </div>
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {products.map(product => (
                     <li key = {product.id}>
@@ -36,11 +57,13 @@ function ProductsList() {
                         <p className="text-lg font-bold mb-2">{product.price}</p>
                         <button 
                             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" 
-                            onClick={() => console.log("CLICKED")}
+                            onClick={() => addToCart(product.id)}
                         >+</button>
                     </li>
                 ))}
             </ul>
+            <Cart isOpen={showCart} toggle={() => setShowCart(!showCart)} />
+                
         </>
     )
 }
