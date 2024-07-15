@@ -41,7 +41,7 @@ def add_to_cart(request):
         return Response({"error": 'Need Product Id/Select Product to Add'}, status=status.HTTP_400_BAD_REQUEST)
     
     try:
-        product = Product.objects.get(id=product_id)  # Corrected from `product_id` to `id=product_id`
+        product = Product.objects.get(id=product_id) 
         print(product_id, 'Found Product')
     except Product.DoesNotExist:
         return Response({"error": 'Cannot Find Product'}, status=status.HTTP_404_NOT_FOUND)
@@ -53,4 +53,26 @@ def add_to_cart(request):
         cart_item.save()
 
     serializer = CartItemSerializer(cart_item)
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response({'cartItem': serializer.data, 'productId': product_id, 'quantity' : cart_item.quantity}, status=status.HTTP_201_CREATED)
+
+@api_view(['POST'])
+def remove_from_cart(request):
+    print('removing from cart')
+    product_id = request.data.get('productId')  # Change to productId
+    if not product_id:
+        return Response({'error': 'Required Product ID'}, status=400)
+
+    try:
+        # Find the CartItem associated with the product ID
+        cart_item = CartItem.objects.get(product__id=product_id)  # Get CartItem by product ID
+        if cart_item.quantity > 1:
+            cart_item.quantity -= 1
+            cart_item.save()
+        else:
+            cart_item.delete()
+        return Response({'message': 'Item Removed from cart'})
+    except CartItem.DoesNotExist:
+        return Response({'message': 'Item not found in cart'}, status=404)
+    except Exception as e:
+        print(e)
+        return Response({'message': 'Error occurred while removing item'}, status=500)
