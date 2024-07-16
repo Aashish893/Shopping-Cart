@@ -25,9 +25,9 @@ function ProductsList() {
     const openCart = async () => {
         setShowCart(true);
     };
+    console.log("Loading state:", loading);
 
-
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <p data-testid='loading'>Loading...</p>;
 
     return (
         <>
@@ -44,7 +44,7 @@ function ProductsList() {
                         <div className="w-full h-64 mb-4">
                             <img src={product.image} alt={product.title} className="w-full h-full object-contain rounded" />
                         </div>
-                        <h3 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap " style={{ maxHeight: '3em' }}>{product.title}</h3>
+                        <h3 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap" style={{ maxHeight: '3em' }}>{product.title}</h3>
                         <ShowDescription description={product.description} />
                         <p className="text-lg font-bold mb-2">{product.price}</p>
                         <div className="flex justify-between items-center">
