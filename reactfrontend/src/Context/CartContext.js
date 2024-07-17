@@ -6,7 +6,7 @@ export const CartContext = createContext();
 export const CartContextProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
     const [cartUpdate, setCartUpdate] = useState(false);
-    
+    console.log(backEndURL)
     // const url = 'http://127.0.0.1:8000';
     useEffect(() => {
         const fetchCart = async () => {

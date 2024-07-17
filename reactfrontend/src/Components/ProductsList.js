@@ -6,12 +6,12 @@ function ProductsList() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showCart, setShowCart] = useState(false);
-    const {addToCart, removeFromCart, url, cart} = useContext(CartContext);
+    const {addToCart, removeFromCart, backEndURL, cart} = useContext(CartContext);
     console.log(cart)
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get(`${url}/api/products/`);
+                const response = await axios.get(`${backEndURL}/api/products/`);
                 setProducts(response.data);
                 setLoading(false);
             } catch (error) {
@@ -19,7 +19,7 @@ function ProductsList() {
             }
         };
         fetchProducts();
-    }, [url]);
+    }, [backEndURL]);
 
     const openCart = async () => {
         setShowCart(true);
