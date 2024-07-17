@@ -6,21 +6,20 @@ function ProductsList() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showCart, setShowCart] = useState(false);
-    const {addToCart, removeFromCart} = useContext(CartContext);
-
+    const {addToCart, removeFromCart, url, cart} = useContext(CartContext);
+    console.log(cart)
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/products/');
+                const response = await axios.get(`${url}/api/products/`);
                 setProducts(response.data);
                 setLoading(false);
             } catch (error) {
                 console.log('ERROR LOADING DATA', error);
-                setLoading(false);
             }
         };
         fetchProducts();
-    }, []);
+    }, [url]);
 
     const openCart = async () => {
         setShowCart(true);
@@ -51,9 +50,11 @@ function ProductsList() {
                             <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600" onClick={() => addToCart(product.id)}>
                                 Add
                             </button>
-                            <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600" onClick={() => removeFromCart(product.id)}>
-                                Remove
-                            </button>
+                            {cart.some(item => item.product.id === product.id) && (
+                                <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600" onClick={() => removeFromCart(product.id)}>
+                                    Remove
+                                </button>
+                            )}
                         </div>
                     </li>
                 ))}

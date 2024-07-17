@@ -1,0 +1,1 @@
+export const backEndURL = 'https://ec2-34-233-124-175.compute-1.amazonaws.com:8000'

@@ -1,28 +1,28 @@
-import React,{ createContext,useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
+import { backEndURL } from "../constants";
+export const CartContext = createContext();
 
-export const CartContext =  createContext();
-
-export const CartContextProvider = ({children}) => {
+export const CartContextProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
     const [cartUpdate, setCartUpdate] = useState(false);
-
-
+    
+    // const url = 'http://127.0.0.1:8000';
     useEffect(() => {
         const fetchCart = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/cart/');
+                const response = await axios.get(`${backEndURL}/api/cart/`);
                 setCart(response.data);
             } catch (error) {
-                console.log(error,"error");
+                console.log(error, "error");
             }
-        } 
+        }
         fetchCart();
-    },[cartUpdate] )
+    }, [cartUpdate])
 
     const addToCart = async (productId) => {
         try {
-            await axios.post('http://127.0.0.1:8000/api/cart/add/', { productId })
+            await axios.post(`${backEndURL}/api/cart/add/`, { productId })
             setCartUpdate(prevState => !prevState)
         } catch (error) {
             console.log(error);
@@ -30,15 +30,15 @@ export const CartContextProvider = ({children}) => {
     }
     const removeFromCart = async (productId) => {
         try {
-            await axios.post('http://127.0.0.1:8000/api/cart/remove/', { productId })
+            await axios.post(`${backEndURL}/api/cart/remove/`, { productId })
             setCartUpdate(!cartUpdate);
         } catch (error) {
             console.log(error);
         }
     }
 
-    return(
-        <CartContext.Provider value={{cart, addToCart, removeFromCart, cartUpdate}}>
+    return (
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart, cartUpdate, backEndURL }}>
             {children}
         </CartContext.Provider>
     )
