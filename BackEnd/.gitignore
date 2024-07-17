@@ -1,0 +1,78 @@
+# Python bytecode
+*.py[cod]
+__pycache__/
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+*.DS_Store
+*.coverage
+*.coverage.*
+
+# Django migrations
+*/migrations/*.py
+*/migrations/*.pyc
+
+# Environments
+.env
+.venv
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Database
+db.sqlite3
+
+# Secrets
+*.pem
+*.key
+.secret
+
+# pyenv
+.python-version
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# mypy
+.mypy_cache/
+
+# Pycharm
+.idea/
+
+# VSCode
+.vscode/
+
+# Local binary
+bin/
+local/
+
+# Caches
+*.egg-info/
+.eggs/
+*.egg
+dist/
+build/
+eggs/
+*.manifest
+.installed.cfg
+*.egg-info/
+.eggs/
+parts/
+sdist/
+develop-eggs/
+
+# Node.js
+node_modules/
+
+# Django static files
+staticfiles/
+static/
+media/
