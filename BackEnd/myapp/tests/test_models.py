@@ -21,8 +21,3 @@ class CartItemModelTest(TestCase):
         cart_item = CartItem.objects.get(product = self.product)
         self.assertEqual(cart_item.quantity, 1)
     
-
-    # def test_cart_creation(self):
-    #     cart_item = CartItem.objects.get(product__title='Fake Item')
-    #     self.assertEqual(cart_item.quantity,1)
-        
